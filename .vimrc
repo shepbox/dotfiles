@@ -49,7 +49,8 @@ set cursorline
 " Make tabs as wide as two spaces
 set tabstop=2
 " Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set lcs=tab:▸\ ,trail:·,nbsp:_
+"set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set list
 " Highlight searches
 set hlsearch
@@ -265,8 +266,8 @@ map <C-l> 3zl
 map <C-h> 3zh
 
 " STATUS LINE
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-set exrc
+"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+"set exrc
 
 " ABBREVATIONS
 "iab <expr> ts strftime("%H:%M -")
