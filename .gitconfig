@@ -1,7 +1,18 @@
 [alias]
 
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log -p
+  pr = pull --rebase
+  s = stash
+  sp = stash pop
+  ai = add -i
+
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	#l = log --graph --abbrev-commit --decorate --date=relative
 
 	# View the current working tree status using the short format
 	s = status -s
@@ -76,6 +87,8 @@
 		fi \
 	}; f"
 
+
+
 [apply]
 
 	# Detect whitespace errors when applying a patch
@@ -99,6 +112,8 @@
 	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
 	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
 	precomposeunicode = false
+
+	editor = vim
 
 [color]
 

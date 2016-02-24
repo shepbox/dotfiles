@@ -98,9 +98,183 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 " Automatic commands
 if has("autocmd")
 	" Enable file type detection
-	filetype on
+	filetype plugin indent on
 	" Treat .json files as .js
 	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 	" Treat .md files as Markdown
 	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+	autocmd FileType text setlocal linebreak
+
+	" When editing a file, always jump to the last known cursor position.  " Don't do it when the position is invalid or when inside an event handler
+	" (happens when dropping a file on gvim).
+	" Also don't do it when the mark is in the first line, that is the default
+	" position when opening a file.
+	autocmd BufReadPost *
+				\ if line("'\"") > 1 && line("'\"") <= line("$") |
+				\   exe "normal! g`\"" |
+				\ endif
 endif
+
+set history=50		" keep 50 lines of command line history
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+
+" #################
+execute pathogen#infect()
+
+
+"syntax on
+"se t_Co=16
+"set background=dark
+"colorscheme delek
+"colorscheme vimbrant
+"highlight ColorColumn ctermbg=7
+"highlight ColorColumn guibg=Gray
+
+"set binary
+"set noeol
+set nu
+set list
+
+"set smartindent
+"set tabstop=2
+"set shiftwidth=2
+"set expandtab
+
+
+"set ignorecase
+set smartcase
+
+" ####### Fugitive
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+" ####### SAM
+
+autocmd BufNewFile,BufRead *.kjs,*._js setf javascript
+"if has('autocmd')
+"  au BufWritePost .vimrc source $MYVIMRC
+"endif
+
+"let mapleader=','
+
+
+" Fix spelling
+map <leader>sf 1z=<CR>
+" Toggle Spelling
+map <leader>s :set spell!<cr>
+
+map <leader>t :tabnew<cr> 
+
+imap <leader>w <esc>:update<cr>a
+map <leader>w :update<cr>
+
+
+map <leader>h :nohlsearch<cr>
+
+function! OpenBash() 
+  execute ':!(cd ' . expand('%:h') . ';bash -l)'
+endfunction
+
+function! KeliUIBuild()
+  execute ':!(cd ~/dev/keli_interface/; gulp dist; )'
+  call KeliBuild('~/dev/keli_core/', '_core_ui_components.kjs')
+endfunction
+
+function! FindKeliFunction()
+  execute ':vimgrep ' . @/
+endfunction
+
+function! KeliBuild(...)
+  if a:0 == 0
+    let directory = expand('%:p:h')
+    let filename = expand('%:t')
+  elseif a:0 == 1 
+    let directory = expand('%:p:h')
+    let filename = a:1
+  elseif a:0 == 2
+    let directory = a:1
+    let filename = a:2
+  endif
+  
+  execute ':!(cd ' . directory . '; ~/dev/keli/writetemplate.sh "' . filename .'$")'
+endfunction
+
+function! BigWindows()
+  set winwidth=150
+  set winheight=75
+endfunction
+
+function! SmallWindows()
+  set winwidth=20
+  set winheight=20
+endfunction
+
+" Open a bash prompt in the current diriectly of the file 
+map <leader>b :call OpenBash()<cr>
+" Run the current file in bash
+map <leader>r :!./%<cr>
+" Build a single template
+map <leader>kb :call KeliBuild()<cr>
+" Build all templates
+"map <leader>kb :call KeliBuild()<cr>
+" Build UI and ui templates only
+map <leader>kg :call KeliUIBuild()<cr><cr>
+
+map <leader>kj :grep -id recurse $f %g
+map <leader>kf :grep -id recurse $w %g
+"map <leader>kj :tabnew vimgrep /n<cr>
+
+" Edit .vimrc in new tab
+map <leader>v :tabe $MYVIMRC<cr>
+
+"cnoremap $v <C-R>='/n '.substitute(@/,'\\[<>]\{1}','','g').'/'<cr>
+cnoremap $v <C-R>='/n '.expand('<cword>').'/'<cr>
+cnoremap $f <C-R>='"n '.expand('<cword>').'"'<cr>
+cnoremap $w <C-R>='"'.expand('<cword>').'"'<cr>
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+cnoremap %k <C-R>=fnameescape(expand('%:h')).'/*.kjs'<cr>
+cnoremap %s <C-R>=fnameescape(expand('%:p:h')).'/**/*'<cr>
+cnoremap %g <C-R>=fnameescape(expand('%:p:h')).'/*'<cr>
+cnoremap %r s/<c-r>=expand('<cword>')<cr>/
+
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
+
+map <leader>c :nohlsearch <cr>
+
+" Alternate to ESC
+inoremap kj <esc>
+inoremap <leader>[ [ ] 
+
+" Scroll Right
+map <C-l> 3zl
+" Scroll Left
+map <C-h> 3zh
+
+" STATUS LINE
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set exrc
+
+" ABBREVATIONS
+"iab <expr> ts strftime("%H:%M -")
+"iab <expr> ds strftime("%a %m/%d")
+"iab <expr> ds strftime("%a %m/%d")
+
+let jsdoc_default_mapping = 0
+
+
+let g:UltiSnipsEditSplit="vertical"
+
