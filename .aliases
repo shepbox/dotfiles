@@ -147,3 +147,10 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
+
+# Keli Stuff
+alias gta='cd ~/dev/keli/apps'
+alias gtc='cd ~/dev/keli/core'
+alias gtb='cd ~/dev/keli/bootstrap'
+alias gti='cd ~/dev/keli/interface'
+
