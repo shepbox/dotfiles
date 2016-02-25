@@ -1,5 +1,4 @@
-" Use the Solarized Dark theme
-set background=dark
+" Use the Solarized Dark theme set background=dark
 colorscheme solarized
 let g:solarized_termtrans=1
 
@@ -28,7 +27,7 @@ set noeol
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if exists("&undodir")
-	set undodir=~/.vim/undo
+  set undodir=~/.vim/undo
 endif
 
 " Don’t create backups when editing files in certain directories
@@ -78,19 +77,19 @@ set title
 set showcmd
 " Use relative line numbers
 if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
+  set relativenumber
+  au BufReadPost * set relativenumber
 endif
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  :%s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
@@ -98,22 +97,22 @@ noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " Automatic commands
 if has("autocmd")
-	" Enable file type detection
-	filetype plugin indent on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-	autocmd FileType text setlocal linebreak
+  " Enable file type detection
+  filetype plugin indent on
+  " Treat .json files as .js
+  autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+  " Treat .md files as Markdown
+  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+  autocmd FileType text setlocal linebreak
 
-	" When editing a file, always jump to the last known cursor position.  " Don't do it when the position is invalid or when inside an event handler
-	" (happens when dropping a file on gvim).
-	" Also don't do it when the mark is in the first line, that is the default
-	" position when opening a file.
-	autocmd BufReadPost *
-				\ if line("'\"") > 1 && line("'\"") <= line("$") |
-				\   exe "normal! g`\"" |
-				\ endif
+  " When editing a file, always jump to the last known cursor position.  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
 endif
 
 set history=50		" keep 50 lines of command line history
@@ -127,63 +126,23 @@ inoremap <C-U> <C-G>u<C-U>
 " Only define it when not defined already.
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+        \ | wincmd p | diffthis
 endif
 
 
-" #################
+" ################# Pathogen
 execute pathogen#infect()
 
+if has("autocmd")
+  " ####### Fugitive
+  autocmd BufReadPost fugitive://* set bufhidden=delete
 
-"syntax on
-"se t_Co=16
-"set background=dark
-"colorscheme delek
-"colorscheme vimbrant
-"highlight ColorColumn ctermbg=7
-"highlight ColorColumn guibg=Gray
+  " ####### SAM
+  autocmd BufNewFile,BufRead *.kjs,*._js setf javascript
+endif
 
-"set binary
-"set noeol
-set nu
-set list
-
-"set smartindent
-"set tabstop=2
-"set shiftwidth=2
-"set expandtab
-
-
-"set ignorecase
-set smartcase
-
-" ####### Fugitive
-autocmd BufReadPost fugitive://* set bufhidden=delete
-
-" ####### SAM
-
-autocmd BufNewFile,BufRead *.kjs,*._js setf javascript
-"if has('autocmd')
-"  au BufWritePost .vimrc source $MYVIMRC
-"endif
-
-"let mapleader=','
-
-
-" Fix spelling
-map <leader>sf 1z=<CR>
-" Toggle Spelling
-map <leader>s :set spell!<cr>
-
-map <leader>t :tabnew<cr> 
-
-imap <leader>w <esc>:update<cr>a
-map <leader>w :update<cr>
-
-
-map <leader>h :nohlsearch<cr>
-
-function! OpenBash() 
+" ##### FUNCTIONS #####
+function! OpenBash()
   execute ':!(cd ' . expand('%:h') . ';bash -l)'
 endfunction
 
@@ -200,14 +159,14 @@ function! KeliBuild(...)
   if a:0 == 0
     let directory = expand('%:p:h')
     let filename = expand('%:t')
-  elseif a:0 == 1 
+  elseif a:0 == 1
     let directory = expand('%:p:h')
     let filename = a:1
   elseif a:0 == 2
     let directory = a:1
     let filename = a:2
   endif
-  
+
   execute ':!(cd ' . directory . '; ~/dev/keli/writetemplate.sh "' . filename .'$")'
 endfunction
 
@@ -221,23 +180,30 @@ function! SmallWindows()
   set winheight=20
 endfunction
 
-" Open a bash prompt in the current diriectly of the file 
-map <leader>b :call OpenBash()<cr>
-" Run the current file in bash
-map <leader>r :!./%<cr>
-" Build a single template
-map <leader>kb :call KeliBuild()<cr>
-" Build all templates
-"map <leader>kb :call KeliBuild()<cr>
-" Build UI and ui templates only
-map <leader>kg :call KeliUIBuild()<cr><cr>
-
-map <leader>kj :grep -id recurse $f %g
-map <leader>kf :grep -id recurse $w %g
-"map <leader>kj :tabnew vimgrep /n<cr>
+" ##### CUSTOM MAPPING #######
 
 " Edit .vimrc in new tab
 map <leader>v :tabe $MYVIMRC<cr>
+" Fix spelling
+map <leader>sf 1z=<CR>
+" Toggle Spelling
+map <leader>s :set spell!<cr>
+" New Tab
+map <leader>t :tabnew<cr>
+" Save/Write/Update
+imap <leader>w <esc>:update<cr>a
+map <leader>w :update<cr>
+" Clear highlight search
+map <leader>h :nohlsearch<cr>
+map <leader>c :nohlsearch <cr>
+" Open a bash prompt in the current directory of the file
+map <leader>b :call OpenBash()<cr>
+" Run the current file in bash
+map <leader>r :!./%<cr>
+" Function lookup using grep
+map <leader>j :grep -id recurse $f %g
+" Word Lookup using group
+map <leader>f :grep -id recurse $w %g
 
 "cnoremap $v <C-R>='/n '.substitute(@/,'\\[<>]\{1}','','g').'/'<cr>
 cnoremap $v <C-R>='/n '.expand('<cword>').'/'<cr>
@@ -249,33 +215,33 @@ cnoremap %s <C-R>=fnameescape(expand('%:p:h')).'/**/*'<cr>
 cnoremap %g <C-R>=fnameescape(expand('%:p:h')).'/*'<cr>
 cnoremap %r s/<c-r>=expand('<cword>')<cr>/
 
+" Edit in current directory
 map <leader>ew :e %%
+" Edit Split in current directory
 map <leader>es :sp %%
+" Edit Split Vertical in current directory
 map <leader>ev :vsp %%
+" Edit New Tab in current directory
 map <leader>et :tabe %%
-
-map <leader>c :nohlsearch <cr>
 
 " Alternate to ESC
 inoremap kj <esc>
-inoremap <leader>[ [ ] 
-
 " Scroll Right
 map <C-l> 3zl
 " Scroll Left
 map <C-h> 3zh
 
-" STATUS LINE
-"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-"set exrc
+" ## APP SPECIFIC ##
+" Build templates
+map <leader>kb :call KeliBuild()<cr>
+" Build UI and ui templates only
+map <leader>kg :call KeliUIBuild()<cr><cr>
 
-" ABBREVATIONS
-"iab <expr> ts strftime("%H:%M -")
-"iab <expr> ds strftime("%a %m/%d")
-"iab <expr> ds strftime("%a %m/%d")
+" ##### PLUGINS #####
+
+" STATUS LINE
+" set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 let jsdoc_default_mapping = 0
-
-
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit = "vertical"
 
