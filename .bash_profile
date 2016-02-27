@@ -47,12 +47,12 @@ complete -W "NSGlobalDomain" defaults;
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
-
 #todo.sh
 export TODOTXT_DEFAULT_ACTION=ls
 alias t='todo.sh'
 complete -F _todo t
 
+#vi mode in bash
 set -o vi
 set show-mode-in-prompt on
 
