@@ -18,6 +18,7 @@ function submodules() {
 	else
 		updateSubmodules;
 	fi;
+	REPLY="";
 }
 
 function updateSubmodules() {
@@ -40,6 +41,7 @@ function main() {
 		else
 			echo "Chicken'd out!";
 		fi;
+		REPLY="";
 	fi;
 }
 
