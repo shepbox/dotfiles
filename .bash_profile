@@ -56,8 +56,6 @@ complete -F _todo t
 set -o vi
 set show-mode-in-prompt on
 
-export GOPATH=$HOME/dev/go
-
 
 test -e ${HOME}/.iterm2_shell_integration.bash && source ${HOME}/.iterm2_shell_integration.bash
 
