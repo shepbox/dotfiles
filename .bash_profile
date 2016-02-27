@@ -1,7 +1,5 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
-# Add `~/apps` to the `$PATH`
-export PATH="$HOME/apps:$PATH";
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -54,12 +52,6 @@ complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes Syste
 export TODOTXT_DEFAULT_ACTION=ls
 alias t='todo.sh'
 complete -F _todo t
-
-
-# Setting PATH for Python 2.7
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
-export PATH
 
 set -o vi
 set show-mode-in-prompt on
