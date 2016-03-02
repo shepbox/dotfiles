@@ -156,6 +156,13 @@ function! SmallWindows()
   set winheight=20
 endfunction
 
+function! SearchForWord()
+  let term = input("Term:", expand('<cword>'))
+  let path = input("\nDir:", fnameescape(expand('%:p:h')))
+  echo "Searching for: " . term
+  exec "grep -id recurse " . term  . " " . fnameescape(expand('%:p:h')).'/*'
+endfunction
+
 " ##### CUSTOM MAPPING #######
 
 " Edit .vimrc in new tab
@@ -177,7 +184,7 @@ map <leader>b :call OpenBash()<cr>
 " Run the current file in bash
 map <leader>r :!./%<cr>
 " Word Lookup using group
-map <leader>f :grep -id recurse $w %g
+map <leader>f :call SearchForWord()<cr>
 
 "cnoremap $v <C-R>='/n '.substitute(@/,'\\[<>]\{1}','','g').'/'<cr>
 cnoremap $v <C-R>='/n '.expand('<cword>').'/'<cr>
