@@ -130,7 +130,6 @@ if !exists(":DiffOrig")
         \ | wincmd p | diffthis
 endif
 
-
 " ################# Pathogen
 execute pathogen#infect()
 
@@ -145,30 +144,6 @@ endif
 " ##### FUNCTIONS #####
 function! OpenBash()
   execute ':!(cd ' . expand('%:h') . ';bash -l)'
-endfunction
-
-function! KeliUIBuild()
-  execute ':!(cd ~/dev/keli_interface/; gulp dist; )'
-  call KeliBuild('~/dev/keli_core/', '_core_ui_components.kjs')
-endfunction
-
-function! FindKeliFunction()
-  execute ':vimgrep ' . @/
-endfunction
-
-function! KeliBuild(...)
-  if a:0 == 0
-    let directory = expand('%:p:h')
-    let filename = expand('%:t')
-  elseif a:0 == 1
-    let directory = expand('%:p:h')
-    let filename = a:1
-  elseif a:0 == 2
-    let directory = a:1
-    let filename = a:2
-  endif
-
-  execute ':!(cd ' . directory . '; ~/dev/keli/writetemplate.sh "' . filename .'$")'
 endfunction
 
 function! BigWindows()
@@ -201,8 +176,6 @@ map <leader>c :nohlsearch <cr>
 map <leader>b :call OpenBash()<cr>
 " Run the current file in bash
 map <leader>r :!./%<cr>
-" Function lookup using grep
-map <leader>j :grep -id recurse $f %g
 " Word Lookup using group
 map <leader>f :grep -id recurse $w %g
 
@@ -232,12 +205,6 @@ map <C-l> 3zl
 " Scroll Left
 map <C-h> 3zh
 
-" ## APP SPECIFIC ##
-" Build templates
-map <leader>kb :call KeliBuild()<cr>
-" Build UI and ui templates only
-map <leader>kg :call KeliUIBuild()<cr><cr>
-
 " ##### PLUGINS #####
 
 " STATUS LINE
@@ -245,4 +212,3 @@ map <leader>kg :call KeliUIBuild()<cr><cr>
 
 let jsdoc_default_mapping = 0
 let g:UltiSnipsEditSplit = "vertical"
-
