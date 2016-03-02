@@ -19,3 +19,6 @@
 [submodule ".vim/bundle/editorconfig"]
 	path = .vim/bundle/editorconfig
 	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule ".vim/bundle/instant-markdown"]
+	path = .vim/bundle/instant-markdown
+	url = https://github.com/suan/vim-instant-markdown.git
