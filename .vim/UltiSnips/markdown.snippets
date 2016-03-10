@@ -26,3 +26,37 @@ $1()
 \`\`\`
 
 endsnippet
+
+snippet hello "Create a new Day Template" b
+`date +"%a %m/%d"`
+---------
+#### ROLES ####
+$1
+#### TODO ####
+$2
+#### WORKING ####
+$3
+#### WAITING ####
+$4
+#### DONE ####
+
+#### NOTES ####
+$0
+
+endsnippet
+
+snippet ds "Date Stamp"
+`date +"%a %m/%d"`
+endsnippet
+
+snippet ts "Time Stamp"
+`date +"%H:%M - "`
+endsnippet
+
+snippet dt "Date Time Stamp"
+`date +"%m/%d %H:%M - "`
+endsnippet
+
+snippet n "New Entry" b
+- `date +"%H:%M - "`
+endsnippet
