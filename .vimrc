@@ -212,6 +212,10 @@ map <C-l> 3zl
 " Scroll Left
 map <C-h> 3zh
 
+" Change Quotes
+map <leader>' :s/"/'/<cr> :nohlsearch<cr>
+map <leader>" :s/'/"/<cr> :nohlsearch<cr>
+
 " ##### PLUGINS #####
 
 " STATUS LINE
