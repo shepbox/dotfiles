@@ -132,6 +132,7 @@ endif
 
 " ################# Pathogen
 execute pathogen#infect()
+execute pathogen#helptags()
 
 if has("autocmd")
   " ####### Fugitive
