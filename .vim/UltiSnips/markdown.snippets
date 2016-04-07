@@ -1,28 +1,29 @@
 snippet kdoc "Document Keli Function" b
-## ${1:Function Name}
-${2:Description}
+# ${1:Function Name}
 
-### Syntax
+${2:TODO: Description}
+
+## Syntax
 \`\`\`javascript
-$1($3)
+$1(${3:param1, param2 = 42, [param3]})
 \`\`\`
 
-### Tags
-- ${4:Client}
+## Parameters
+\`${4:{String} param1}\`
+> ${5:TODO: Description}
 
-### Parameters
-\`${5:paramName}\`
-> ${6:Description}
+## Return Values
+${6:TODO}
 
-### Returns
-${7:undefined}
+## Tags
+${7:Client}
 
-### Description
-$8
+## Description
+${8: TODO}
 
-### Examples
+## Examples
 \`\`\`javascript
-$1()
+${0:// TODO}
 \`\`\`
 
 endsnippet
@@ -30,17 +31,23 @@ endsnippet
 snippet hello "Create a new Day Template" b
 `date +"%a %m/%d"`
 ---------
-#### ROLES ####
-$1
-#### TODO ####
-$2
-#### WORKING ####
-$3
-#### WAITING ####
-$4
-#### DONE ####
 
-#### NOTES ####
+endsnippet
+
+snippet kello "Create a new Day Template" b
+`date +"%a %m/%d"`
+---------
+#### Roles ####
+$1
+#### Todo ####
+$2
+#### Working ####
+$3
+#### Waiting ####
+$4
+#### Done ####
+
+#### Notes ####
 $0
 
 endsnippet
@@ -59,4 +66,8 @@ endsnippet
 
 snippet n "New Entry" b
 - `date +"%H:%M - "`
+endsnippet
+
+snippet e "New Entry" b
+`date +"%H:%M - "`
 endsnippet
